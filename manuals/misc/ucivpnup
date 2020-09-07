@@ -1,0 +1,133 @@
+#!/bin/bash
+
+# ucivpnup
+
+# Openconnect command-line script for connecting to UCI's VPN servers
+# from Debian-Ubuntu-derived Linux distro's.  More info at
+#    http://www.socsci.uci.edu/~jstern/uci_vpn_ubuntu/ubuntu-openconnect-uci-instructions.html
+#
+# This script adapted from David Schneider's great page on github at
+#    https://github.com/dnschneid/crouton/wiki/Using-Cisco-AnyConnect-VPN-with-openconnect
+# and with help from OIT's Linux OpenConnect instructions at
+#    http://www.oit.uci.edu/kb/vpn-linux/
+#
+# Jeff Stern 2015-10-21
+#
+# Later, spurred on by a request from UC Berkeley compatriot Leo Simon
+# to make the script more fully automated, I later split this into 2
+# scripts so they can be automated and used inside other bash scripts
+# if necessary.  -JS 2017-08-28
+#
+
+# VPNUSER
+# At UCI, we use your UCINetID (all lower-case) for this
+# (required)
+VPNUSER='evgenii.ponomarev'
+
+# VPNGRP
+# At UCI, setting this will determine what permissions you have
+# to access stuff, and for which sites your computer will use
+# its VPN connection, and for which sites it will not.
+#
+# The possible values for VPNGRP at UCI are:
+#   "Default-WebVPN"
+#   "Merage"
+#   "MerageFull"
+#   "UCI"     <--- this will use the VPN address only for connections
+#                  to UCI. all other connections will use your outside
+#                  address. Normally this is all most users need.
+#   "UCIFull" <--- this will use the VPN address for all connections.
+#                  If you are going to be using UC-related sources
+#                  that are off-campus, such as system-wide Melvyl
+#                  library (melvyl.ucop.edu), then use this.
+# (required)
+VPNGRP="UCI"
+
+# your VPN password. At UCI we use our UCINetID password.  Storing it
+# in plain text here in this file is insecure, though. It is better to
+# put your password into a $HOME/.authinfo file and use a 2nd script
+# to read that password and echo it.  If I find the time, I will add
+# that functionality to this script and the instructions. At least
+# this will suffice for now, 'just to get things going'.
+#
+# On the other hand, if you leave PW blank, or empty string, the
+# script will prompt you for it.
+# (optional)
+# PW=""
+
+# where you want any output of status / errors to go
+# (this should match same var in the ucivpndown script)
+# (required)
+OCLOG="/tmp/oclog.txt"
+
+# ----------------------------------------------------------
+# you should not have to change or edit anything below here
+# ----------------------------------------------------------
+
+# where you will be connecting to for your VPN services
+# (required)
+VPNURL=https://vpn1.skoltech.ru
+
+# this should be universal for most Debian/Ubuntu derived Linux distro's
+# (required)
+VPNSCRIPT=/usr/share/vpnc-scripts/vpnc-script
+
+# timestamp
+echo "`date`: Script ${0} starting." >> "${OCLOG}" 2>&1
+
+# Make an openvpn tunnel (interface), and if successful, use it to
+# connect to our Cisco server.
+numtuns=`/sbin/ifconfig tun1 | wc -l`
+if [ "${numtuns}" -eq 0 ]; then
+	echo "`date`: Creating tun1 openvpn interface." >> "${OCLOG}" 2>&1
+	sudo openvpn --mktun --dev tun1 >> "${OCLOG}" 2>&1
+	# check successful, else quit
+	if [ $? -eq 0 ]; then
+		echo "`date`: tun1 openvpn interface created successfully." >> "${OCLOG}" 2>&1
+	else
+		echo "`date`: Problems creating tun1 openvpn interface. Exiting 1." >> "${OCLOG}" 2>&1
+		exit 1
+	fi
+else
+	echo "`date`: tun1 openvpn interface already exits." >> "${OCLOG}" 2>&1
+fi
+
+# Turn on tun1 openvpn interface. If it is already on, it won't hurt
+# anything.
+echo "`date`: Turning tun1 on." >> "${OCLOG}" 2>&1
+sudo ifconfig tun1 up >> "${OCLOG}" 2>&1
+# check successful, else quit
+if [ $? -eq 0 ]; then
+	echo "`date`: tun1 on." >> "${OCLOG}" 2>&1
+else
+	echo "`date`: Problems turning tun1 on. (This may leave tun1 existing though.) Exiting 1." >> "${OCLOG}" 2>&1
+	exit 1
+fi
+
+# Check for any pre-existing openconnect connections. If one exists
+# already, we will not create a new one.
+pidofoc=`pidof openconnect`
+echo "`date`: Running openconnect." >> "${OCLOG}" 2>&1
+if [ "$pidofoc" == "" ]; then
+	if [ -z "$PW" ]; then
+		# password var was not set above. User will have to be queried
+		# and type it in manually at keyboard
+		sudo openconnect -b -s "${VPNSCRIPT}" \
+						--user="${VPNUSER}" \
+						--authgroup="${VPNGRP}" \
+						--interface="tun1" \
+						"${VPNURL}"
+	else
+		# password var was set above. Pass it in via stdin
+		echo "${PW}" | sudo openconnect -b -s "${VPNSCRIPT}" \
+							--user="${VPNUSER}" \
+							--passwd-on-stdin \
+							--authgroup="${VPNGRP}" \
+							--interface="tun1" \
+							"${VPNURL}" >> "${OCLOG}" 2>&1
+	fi
+else
+	echo "`date`: Not initiating an openconnect session because one appears to already exist: PID=${pidofoc}" >> "${OCLOG}" 2>&1
+fi
+
+echo "`date`: ${0} script ending successfully." >> "${OCLOG}" 2>&1
