@@ -24,7 +24,7 @@ Manuals for DXG-1 servers Hachiko 1, 2 in Skoltech.
  12. To check the amount of available GPUs and CPUs use ```watch nvidia-smi``` and ```htop``` correspondingly.
  13. To map identically ports from your docker to its host you can add --net="host" to starting command. For example:
  ```bash
-     nvidia-docker run --name tensor_compression -it -v /home/lmarkeeva/workspace/nntc:/workspace/nntc -v /raid:/workspace/raid --net="host" tc:1.0.1 --net="host"
+     nvidia-docker run --name tensor_compression -it -v /home/lmarkeeva/workspace/nntc:/workspace/nntc -v /raid:/workspace/raid --net="host" tc:1.0.1
  ```
  
 ## Manuals
