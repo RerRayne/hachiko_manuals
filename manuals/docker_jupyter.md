@@ -1,7 +1,7 @@
 # TL;DR Docker + Jupyter (for Dummies)
 The following command creates a docker container, mounts raid/data folder to your workspace, manages ports and limits CPU load
 ```bash
-nvidia-docker run --name=YOUR_CONTAINER_NAME -t -p YOUR_PORT:YOUR_PORT --cpus=8 --ipc=host -v /home/YOUR_USERNAME:/workspace -v /raid/:/workspace/raid YOUR_DOCKER_IMAGE
+nvidia-docker run --name=YOUR_CONTAINER_NAME -it -p YOUR_PORT:YOUR_PORT --cpus=8 --ipc=host -v /home/YOUR_USERNAME:/workspace -v /raid/:/workspace/raid YOUR_DOCKER_IMAGE
 ```
 
 Note:
