@@ -11,7 +11,7 @@ Note:
 
 Example:
 ```bash
-nvidia-docker run --name=talgat2 -t -p 1313:1313 --cpus=8 --ipc=host -v /home/tdaulbaev:/workspace -v /raid/:/workspace/raid nvcr.io/nvidia/pytorch:19.07-py3
+nvidia-docker run --name=talgat2 -it -p 1313:1313 --cpus=8 --ipc=host -v /home/tdaulbaev:/workspace -v /raid/:/workspace/raid nvcr.io/nvidia/pytorch:19.07-py3
 ```
 
 Detach the process (Ctrl + Q or Ctrl + P) and run the following command that executes your container: 
