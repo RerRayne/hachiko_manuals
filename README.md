@@ -42,6 +42,7 @@ Manuals for DXG-1 servers Hachiko 1, 2 in Skoltech.
 * [Resource Limiting](manuals/resource_limiting.md)
 * [Forwarding ports from docker container](manuals/port_forwarding.md)
 * [Instructions for a persistent docker container](manuals/persistant_container.md)
+* [Update Root CAs](manuals/update-trusted-ca.md)
 
 ## Emergency contacts <span id="Emergency_contacts"><span>
 
