@@ -1,5 +1,17 @@
 # Establish SSH connection
 
+## Account Creation
+
+In order to create account you need to pick username, generate SSH-key. Then
+you should send
+
+1. your name,
+2. email,
+3. username,
+4. and public SSH-key to an admin.
+
+As soon as account created you can go to the next section.
+
 ## Preparation
 
 Let `%username%` be your account name.
@@ -7,7 +19,7 @@ Let `%username%` be your account name.
 1. `mkdir -p ~/.ssh/control-master`
 2. `vim  ~/.ssh/config`
 3. Add the following lines:
-   ```
+   ```ssh-config
    Host hachiko1 hachiko2
        ControlPath ~/.ssh/control-master/%C
        ControlMaster auto
