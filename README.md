@@ -2,31 +2,29 @@
 Manuals for DXG-1 servers Hachiko 1, 2 in Skoltech.
 
 ## How get access
-1. You have to be a Ph.D. student or employee at Skoltech.
+1. You have to be a MSc student, PhD student or employee at Skoltech.
 2. Ask your supervisor/manager for access.
-3. Redirect to @rerayne a granted permission she'll make you an account.
-4. E-mail helpdesk@skoltech.ru and request Skoltech VPN and usage instructions.
+3. Redirect to [@ChuPIka][1], [@rerayne][2], or [@maremun][3] a granted permission to make you an account.
+4. E-mail [helpdesk@skoltech.ru][4] and request Skoltech VPN and usage instructions.
 5. Read very thoroughly this manual before you start.
 6. In any urgent or uncertain situation contact Emergency contacts ASAP.
 
 ## Main rules
- 1. DXG-1 uses nvidia-docker. That's why, please read a starting manual about this system. <add link>
- 2. Always use  nvidia-docker instead just docker if you want to use GPUs
- 3. Don't keep a lot of docker images running. Running a container takes a lot of HDD.
- 4. Each user creates a docker for their needs. Docker's name **HAS TO** contain the user's surname. Failure to satisfy this rule could result in a termination of the container.
- 5. Don't hold resources that you don't need right now. If you work in iPython notebook release all cards you hold through kernel termination. A looped process could be terminated without saving the sate and data
- 6. Limit your resources using special keys when you start your docker container. [Tutorial](manuals/resource_limiting.md)
- 7. When you're starting your docker you can mount any local directory by adding ```-v <local_dir>:<docker_dir>``` to the starting command.
- 8. NEVER attach the root directory to your docker. It could result in a total crash of the system. Just never do it. If you want to delete any folder but can't just contact [Emergency contacts](#Emergency_contacts).
- 9. All datasets have to be stored in a corresponding RAID directory: ```/raid/data/datasets```.
- 10. Save as little data in your home directory as you can. The rest has to be stored in ```/raid/data/%username%``` directory.
- 11. It's a good idea to get familiar with tmux or screen apps for remote sessions.
- 12. To check the amount of available GPUs and CPUs use ```watch nvidia-smi``` and ```htop``` correspondingly.
- 13. To map identically ports from your docker to its host you can add --net="host" to starting command. For example:
- ```bash
-     nvidia-docker run --name tensor_compression -it -v /home/lmarkeeva/workspace/nntc:/workspace/nntc -v /raid:/workspace/raid --net="host" tc:1.0.1
- ```
- 
+
+1. DXG-1 uses `docker`. That's why, please read a starting manual about this system. <add link>
+2. Don't keep a lot of docker images running. Running a container takes a lot of HDD.
+3. Each user creates a docker for their needs. Docker's name **HAS TO** contain the user's surname according to template `<username>-mysmallcontainer`.
+Failure to satisfy this rule could result in a termination of the container.
+4. Don't hold resources that you don't need right now. If you work in Jupyter notebook release all cards you hold through kernel termination. A looped process could be terminated without saving the sate and data.
+5. Limit your resources using special keys when you start your docker container (see [tutorial][5] for details).
+6. When you're starting your docker you can mount any local directory by adding `-v <local_dir>:<docker_dir>` to the starting command. Directory should be specified as an absolute paths starting with `/` (forward slash).
+7. NEVER attach the root directory to your docker. It could result in a total crash of the system. Just never do it. If you want to delete any folder but can't just contact [Emergency contacts](#Emergency_contacts).
+8. All datasets have to be stored in a corresponding RAID directory: `/raid/data/datasets`.
+9. Save as little data in your home directory as you can. The rest has to be stored in `/raid/data/<username>` directory. Failure to satisfy this rule could result in a termination of the container.
+10. It's a good idea to get familiar with `tmux` or `screen` apps for remote sessions.
+11. To check the amount of available GPUs and CPUs use `watch nvidia-smi` and `htop` correspondingly.
+12. In case of extreme necessity you can add `--net=host` to starting command in order to map identically ports from your docker to its host.
+
 ## Manuals
 * [General Info](manuals/general_info.md)
 * [Establish SSH connection](manuals/connect_ssh.md)
@@ -48,6 +46,10 @@ Manuals for DXG-1 servers Hachiko 1, 2 in Skoltech.
 
 * @rerayne
     * E-mail: rerayne@gmail.com
-    * Telegram: @rerayne
-    
- 
+    * Telegram: [@rerayne][2]
+
+[1]: https://t.me/ChuPika
+[2]: https://t.me/rerayne
+[3]: https://t.me/maremun
+[4]: mailto:helpdesk@skoltech.ru
+[5]: ./manuals/resource_limiting.md

@@ -24,9 +24,9 @@ export PATH="/opt/miniconda3/bin:$PATH"
 to your `.bashrc`
 
 # Tensorflow
-To use tensorflow, you have to use `nvidia-docker`:
+To use tensorflow, you have to use `docker`:
 ```bash
-nvidia-docker run -it --rm -v /home/username/proj1:/workspace nvcr.io/nvidia/tensorflow:18.04-py3
+docker run -it --rm -v /home/username/proj1:/workspace nvcr.io/nvidia/tensorflow:18.04-py3
 ```
 
 
@@ -44,4 +44,4 @@ If you are inside the container, for example, `ls /workspace`, you will see the 
 To use python3 in container specify it in the command:
 `python3 script.py`
 
-For details about nvidia-docker read the post [here](https://github.com/nvidia/nvidia-docker).
+For details about docker read the post [here](https://github.com/nvidia/nvidia-container-runtime).

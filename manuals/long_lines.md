@@ -2,5 +2,5 @@
 
 Connect to a container using the following cmd:
 ```bash
-nvidia-docker exec -ti --env COLUMNS=tput cols --env LINES=tput lines name bash
+docker exec -ti --env COLUMNS=tput cols --env LINES=tput lines name bash
 ```
