@@ -14,7 +14,7 @@
 
 4. Добавить побольше портов и примонтировать raid. Имя тут то, куда коммитили:
     ```bash
-    nvidia-docker run -t -p 9496-9500:9496-9500 --name=kekus -v /home/eponomarev/kek:/workspace -v /raid/data/eponomarev/:/mnt kek
+    docker run -t -p 9496-9500:9496-9500 --name=kekus -v /home/eponomarev/kek:/workspace -v /raid/data/eponomarev/:/mnt kek
     ```
 
 5. Добавить эти порты в .ssh/config у себя (похоже только копипастой):
@@ -28,7 +28,7 @@
     
 6. Запускать как обычно:
     ```bash
-    nvidia-docker exec -ti kekus bash
+    docker exec -ti kekus bash
    ```
    
    Хорошей идеей так же будет добавить `--shm-size 8G` к команде.
