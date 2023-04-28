@@ -116,9 +116,9 @@ MacOS (Monterey and Ventura) has its own tooling. Importing a certificate into
 system keychain can be down as follows.
 
 ```shell
-sudo security add-trusted-cert -d -r trustAsRoot \
+sudo security add-trusted-cert -d -r trustRoot \
     -k /Library/Keychains/System.keychain \
-    Skoltech_CAIT_Root_CA
+    Skoltech_CAIT_Root_CA.crt
 ```
 
 ## Final Notes
