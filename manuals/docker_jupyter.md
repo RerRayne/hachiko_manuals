@@ -1,7 +1,7 @@
 # TL;DR Docker + Jupyter (for Dummies)
-The following command creates a docker container, mounts raid/data folder to your workspace, manages ports and limits CPU load
+The following command creates a docker container, mounts `/mnt/local` folder into your container, manages ports and limits CPU load
 ```bash
-docker run --rm -ti --name=YOUR_CONTAINER_NAME -p YOUR_PORT:YOUR_PORT --cpus=8 -v /home/YOUR_USERNAME:/workspace -v /raid/:/workspace/raid YOUR_DOCKER_IMAGE
+docker run --rm -ti --name=YOUR_CONTAINER_NAME -p YOUR_PORT:YOUR_PORT --cpus=8 -v /home/YOUR_USERNAME:/workspace -v /mnt/local:/workspace/mnt/local YOUR_DOCKER_IMAGE
 ```
 
 Note:
@@ -11,7 +11,7 @@ Note:
 
 Example:
 ```bash
-docker run --rm -ti --name=talgat2 -p 1313:1313 --cpus=8 --ipc=host -v /home/tdaulbaev:/workspace -v /raid/:/workspace/raid nvcr.io/nvidia/pytorch:19.07-py3
+docker run --rm -ti --name=talgat2 -p 1313:1313 --cpus=8 -v /home/tdaulbaev:/workspace -v /mnt/local:/workspace/mnt/local nvcr.io/nvidia/pytorch:24.03-py3
 ```
 
 Detach the process (Ctrl + Q or Ctrl + P) and run the following command that executes your container: 

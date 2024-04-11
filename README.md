@@ -19,8 +19,8 @@ Failure to satisfy this rule could result in a termination of the container.
 5. Limit your resources using special keys when you start your docker container (see [tutorial][5] for details).
 6. When you're starting your docker you can mount any local directory by adding `-v <local_dir>:<docker_dir>` to the starting command. Directory should be specified as an absolute paths starting with `/` (forward slash).
 7. NEVER attach the root directory to your docker. It could result in a total crash of the system. Just never do it. If you want to delete any folder but can't just contact [Emergency contacts](#Emergency_contacts).
-8. All datasets have to be stored in a corresponding RAID directory: `/raid/data/datasets`.
-9. Save as little data in your home directory as you can. The rest has to be stored in `/raid/data/<username>` directory. Failure to satisfy this rule could result in a termination of the container.
+8. All datasets have to be stored in a corresponding RAID directory: `/mnt/local/data/datasets`.
+9. Save as little data in your home directory as you can. The rest has to be stored in `/mnt/local/data/<username>` directory. Failure to satisfy this rule could result in a termination of the container.
 10. It's a good idea to get familiar with `tmux` or `screen` apps for remote sessions.
 11. To check the amount of available GPUs and CPUs use `watch nvidia-smi` and `htop` correspondingly.
 12. In case of extreme necessity you can add `--net=host` to starting command in order to map identically ports from your docker to its host.
